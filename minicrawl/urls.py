@@ -26,7 +26,7 @@ def normalize(url: str, base: str | None = None) -> str | None:
     netloc = host if port in (None, DEFAULT_PORTS[scheme]) else f"{host}:{port}"
 
     path = _normalize_path(parts.path or "/")
-    query = urlencode(sorted((k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True) if k not in TRACKING_PARAMS))
+    query = urlencode(sorted((k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True) if k.lower() not in TRACKING_PARAMS))
     return urlunsplit((scheme, netloc, path, query, ""))  # fragment dropped
 
 
